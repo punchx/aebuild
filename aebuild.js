@@ -9,7 +9,8 @@ const args = process.argv;
 // const args = ['','','D:/jsx/hello.jsx']
 
 if ((args[2]=='--watch' && args[3]) || args[2]) {
-	const myPath = (args[3] || args[2] || Null).replace(/\\/g, '\\\\');
+	const myPath = path.resolve(args[3] || args[2] || Null).replace(/\\/g, '\\\\');
+	
 	// console.log(myPath.replace(/\\/g, '\\\\'));
 
 	function lint(file) {
