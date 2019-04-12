@@ -1,0 +1,16 @@
+{
+  "name": "aebuild",
+  "version": "1.0.0",
+  "description": "Build system for ExtendScript After effects",
+  "main": "aebuild.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": "./aebuild.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chokidar": "^2.1.5",
+    "eslint": "^5.16.0"
+  }
+}
