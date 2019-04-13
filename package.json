@@ -7,10 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": "./aebuild.js",
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/punchx/aebuild.git"
+  },
+  "homepage": "https://github.com/punchx/aebuild",
+  "author": "Rodion Rusu",
   "license": "ISC",
   "dependencies": {
-    "chokidar": "^2.1.5",
-    "eslint": "^5.16.0"
+    "chokidar": "^2.1.5"
   }
 }
