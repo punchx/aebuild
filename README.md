@@ -1,4 +1,4 @@
-# Aebuild
+# Aebuild v.1.0.1
 Sublime Text build system for sending and executing scripts to [After Effects](https://www.adobe.com)
 ## Installation
 Aebuild is not a self-contained tool. It works alongside whith other my tool [AeDevServer](https://github.com/punchx/aedevserver) which you need to install.
