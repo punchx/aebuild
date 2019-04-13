@@ -11,6 +11,7 @@ npm install -g aebuild
 ### How to use:
 After instalation you can use watch mode by typing in your terminal:
 ```
-aebuild --watch [your file path]
+aebuild --watch myscript.jsx
 ```
+In this mode aebuild will execute your script after every file save.
 
