@@ -1,1 +1,1 @@
-# aebuild - sublime buid system for sending and executing scripts to After Affects
+# Aebuild - Sublime Text buid system for sending and executing scripts to After Affects
