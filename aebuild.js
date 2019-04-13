@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-const fs = require('fs');
 const path = require('path');
 const net = require('net');
 const port = 1337;
@@ -11,7 +10,6 @@ if ((args[2]=='--watch' && args[3]) || args[2]) {
 	const myPath = path.resolve(args[3] || args[2] || Null).replace(/\\/g, '\\\\');
 
 	function execScript(path) {
-		let myFile = fs.readFileSync(path, 'utf8');
 		let buffered = '';
 		const client = new net.Socket();
 		client.connect(port, host, function() {
