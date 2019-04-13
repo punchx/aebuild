@@ -9,9 +9,10 @@ Also aebuild is a Nodejs CLI Aapplication which means you need to install [Nodej
 npm install -g aebuild
 ```
 ### How to use:
-After instalation you can use watch mode by typing in your terminal:
+You have two choises. If you like to execute yuor script after every save then use watch mode by typing in your terminal:
 ```
 aebuild --watch myscript.jsx
 ```
-In this mode aebuild will execute your script after every file save.
-
+Or you can make a Sublime buid system file which following command and use for your jsx files:
+```
+"shell_cmd": "aebuild $file"
