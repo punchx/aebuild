@@ -9,7 +9,7 @@ Also aebuild is a Nodejs CLI Aapplication which means you need to install [Nodej
 npm install -g aebuild
 ```
 ## How to use:
-You have two choices. If you like to execute yuor script after every save then use watch mode by typing in your terminal:
+You have two choices. If you like to execute your script after every save then use watch mode by typing in your terminal:
 ```
 aebuild --watch myscript.jsx
 ```
