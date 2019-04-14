@@ -9,7 +9,7 @@ contexts:
       scope: constant.other.aebuild
     - match: '\[line: \d+\]'
       scope: constant.numeric.aebuild
-    - match: '.+: \".+\"$'
+    - match: '.+: \".*\"$'
       scope: message.error.aebuild
     - match: '^\[Finished in .+\]'
       scope: punctuation.definition.annotation.aebuild

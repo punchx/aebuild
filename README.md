@@ -13,8 +13,8 @@ You have two choices. If you like to execute your script after every save then u
 ```
 aebuild --watch myscript.jsx
 ```
-Or you can make a Sublime buid system file which following code and use it for your jsx files:
+Or you can make a Sublime build system file which following code and use it for your jsx files:
 ```
 {"shell_cmd": "aebuild $file"}
 ```
-### Thank you!
+## Thank you!
