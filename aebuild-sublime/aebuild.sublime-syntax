@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: AeBuild
+scope: text.aebuild
+
+contexts: 
+  main:
+    - match: '(.+)/([^/:*?<>|]+.\w )'
+      scope: constant.other.aebuild
+    - match: '\[line: \d+\]'
+      scope: constant.numeric.aebuild
+    - match: '.+: \".+\"$'
+      scope: message.error.aebuild
+    - match: '^\[Finished in .+\]'
+      scope: punctuation.definition.annotation.aebuild

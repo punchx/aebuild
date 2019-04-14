@@ -1,17 +1,17 @@
 #!/usr/bin/env node
-const path = require('path');
-const net = require('net');
-const port = 1337;
-const host = '127.0.0.1';
+var path = require('path');
+var net = require('net');
+var port = 1337;
+var host = '127.0.0.1';
 
-const args = process.argv;
+var args = process.argv;
 
 if ((args[2]=='--watch' && args[3]) || args[2]) {
-	const myPath = path.resolve(args[3] || args[2] || Null).replace(/\\/g, '\\\\');
+	var myPath = path.resolve(args[3] || args[2] || '').replace(/\\/g, '\\\\');
 
 	function execScript(path) {
-		let buffered = '';
-		const client = new net.Socket();
+		var buffered = '';
+		var client = new net.Socket();
 		client.connect(port, host, function() {
 			client.write(path);
 		});
