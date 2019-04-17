@@ -5,7 +5,7 @@ scope: text.aebuild
 
 contexts: 
   main:
-    - match: '(.+)/([^/:*?<>|]+.\w )'
+    - match: '(.+)\/([^/:*?<>|]+\.\w+ )'
       scope: constant.other.aebuild
     - match: '\[line: \d+\]'
       scope: constant.numeric.aebuild
