@@ -1,6 +1,8 @@
 {
 	"shell_cmd": "aebuild $file",
-	"file_regex": "^(\\/.+\\.\\w+) \\[line: (\\d+)\\]() ([^\\n]+)$",
+	"file_regex": "^(~*\\/.+\\.\\w+) \\[line: (\\d+)\\]() ([^\\n]+)$",
 	"working_dir": "$project_path",
 	"syntax": "aebuild.sublime-syntax"
 }
+
+

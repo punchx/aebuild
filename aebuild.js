@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-var path = require('path');
 var net = require('net');
 var port = 1337;
 var host = '127.0.0.1';
@@ -7,7 +6,12 @@ var host = '127.0.0.1';
 var args = process.argv;
 
 if ((args[2]=='--watch' && args[3]) || args[2]) {
-	var myPath = path.resolve(args[3] || args[2] || '').replace(/\\/g, '\\\\');
+	var isWin = process.platform === 'win32';
+	if(isWin) {
+		var myPath = (args[3] || args[2] || '').replace(/\\/g, '\\\\');
+	} else {
+		var myPath = args[3] || args[2] || '';
+	}
 
 	function execScript(path) {
 		var buffered = '';
