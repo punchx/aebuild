@@ -26,8 +26,8 @@ function setSettings() {
 }
 
 
-
 function Init() {
+
 	var defaultObj = {
 		ScriptName: "",
 		Version: "",
@@ -37,9 +37,13 @@ function Init() {
 		UI: "false",
 		Binary: "false"
 	};
+
+
 	var initObject = {};
 	var keys = ['ScriptName', 'Version', 'EntryPoint','Author', 'Port', 'UI', 'Binary'];
 	var questions = ['Script name: ', 'Version: ', 'Entry Point: ','Author name: ', 'Port: ', 'UI(true/false): ', 'Binary: ', 'Presss any key to continue...'];
+
+
 	function rlLoop() {
 		var i = 0;
 		process.stdout.write(questions[i]);
@@ -57,6 +61,7 @@ function Init() {
 			i++;
 		});
 	}
+
 	if (existsAebuildFile) {		
 		rl.question('File aebuild.json already exitsts. Do you want to rewrite it?Y/N:', function(answer) {
 				if (answer.toLowerCase().trim() != 'y') {
@@ -68,6 +73,7 @@ function Init() {
 	} else {
 		rlLoop();
 	}
+
 
 	rl.on('close', function() {
 		var data = JSON.stringify(initObject, null, 2);
@@ -87,12 +93,9 @@ if (args[2] == 'init') {
 	
 	Init();
 
-}
+} else if ((args[2]=='--watch' && args[3]) || args[2] !='--prod') {
 
-
-if ((args[2]=='--watch' && args[3]) || args[2] !='--prod') {
-
-
+	console.log('here');
 	var myPath = path.resolve(args[3] || args[2] || '');
 	myPath = isWin ? myPath.replace(/\\/g, '\\\\') : myPath;
 
@@ -155,7 +158,7 @@ if ((args[2]=='--watch' && args[3]) || args[2] !='--prod') {
 		//substitute conseol.log with alert
 	}*/
 
-	if (aebuildJSON.Binary && aebuildJSON.Binary.toLowerCase().trim() == 'true') {
+if (aebuildJSON.Binary && aebuildJSON.Binary.toLowerCase().trim() == 'true') {
 
 		var script = `#target estoolkit#dbg\n\
 var f= File("` + jsxPath + `");\n\
