@@ -7,6 +7,7 @@ var rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+var UglifyJS = require("uglify-js");
 var isWin = process.platform === 'win32';
 var fs = require('fs');
 var port = 1337;
@@ -25,9 +26,7 @@ function setSettings() {
 	}
 }
 
-
 function Init() {
-
 	var defaultObj = {
 		ScriptName: "",
 		Version: "",
@@ -93,17 +92,14 @@ if (args[2] == 'init') {
 	
 	Init();
 
-} else if ((args[2]=='--watch' && args[3]) || args[2] !='--prod') {
+} else if ((args[2]=='--watch' && args[3]) || (args[2] && args[2] !='--prod')) {
 
-	console.log('here');
 	var myPath = path.resolve(args[3] || args[2] || '');
 	myPath = isWin ? myPath.replace(/\\/g, '\\\\') : myPath;
-
 
 	function execScript(path) {
 		var buffered = '';
 		var client = new net.Socket();
-		// console.log(port);
 		client.connect(port, host, function() {
 			client.write(path);
 		});
@@ -126,7 +122,8 @@ if (args[2] == 'init') {
 			while (rec.length > 1) {
 				if (rec[0] == '###End###') {
 					client.destroy();
-					return true;
+					process.exit();
+					return;
 				}
 				console.log(rec[0]);
 				buffered = rec.slice(1).join('\0');
@@ -145,37 +142,59 @@ if (args[2] == 'init') {
 		execScript(myPath);
 	}
 } else if (args[2]=='--prod') {
-	//read file
-	var jsxFileName = aebuildJSON.entryPoint || 'main.jsx';
+	if ( !existsAebuildFile) {
+		console.log('Aebuild was not intitiated in this folder!');
+		process.exit();
+	} else if (!aebuildJSON || !aebuildJSON.EntryPoint || (aebuildJSON.EntryPoint.trim() == '')) {	
+		console.log('Entry point was not found!');
+		process.exit();
+	}
+
+	var jsxFileName = aebuildJSON.EntryPoint;
 	var jsxPath = path.resolve(path.join(workDir, jsxFileName));
+	if (!fs.existsSync(jsxPath)) {
+		console.log('Entry point was not found!');
+		process.exit();
+	}
 	jsxPath = isWin ? jsxPath.replace(/\\/g, '\\\\') : jsxPath;
+	var nStr = "";
 
-	/*if (aebuildJSON.console && aebuildJSON.console.toLowerCase().trim() == 'remove') {
+	var fStr = fs.readFileSync(jsxPath, 'utf8');
+
+	if (aebuildJSON.Console && aebuildJSON.Console.toLowerCase().trim() == 'remove') {
 		//remove console
-	} else if (aebuildJSON.console && aebuildJSON.console.toLowerCase().trim() == 'writeLn') {
-		//substitute conseol.log with print
-	} else if (aebuildJSON.console && aebuildJSON.console.toLowerCase().trim() == 'alert') {
+		nStr = fStr.replace(/console.(?:log|error)\s*\(.*\);?/g, "");
+	} else if (aebuildJSON.Console && aebuildJSON.Console.toLowerCase().trim() == 'writeln') {
+		//substitute conseol.log with writeLn - which print in info panel
+		nStr = fStr.replace(/console.(?:log|error)/g, "writeLn");
+	} else if (aebuildJSON.Console && aebuildJSON.Console.toLowerCase().trim() == 'alert') {
 		//substitute conseol.log with alert
-	}*/
+		nStr = fStr.replace(/console.(?:log|error)/g, "alert");
+	}
 
-if (aebuildJSON.Binary && aebuildJSON.Binary.toLowerCase().trim() == 'true') {
-
+	if (aebuildJSON.Binary && aebuildJSON.Binary.toLowerCase().trim() == 'true') {
+		var uglyStr = UglifyJS.minify(nStr);
 		var script = `#target estoolkit#dbg\n\
-var f= File("` + jsxPath + `");\n\
-f.open("r");\n\
-var s = f.read();\n\
-f.close();\n\
+var s = "` + uglyStr.code + `";\n\
 var bin = app.compile(s);\n\
-var fOut = File(f.absoluteURI + "bin");\n\
+var fOut = File("` + jsxPath + "bin" + `");\n\
 fOut.open("w");\n\
 fOut.write(bin);`;
 		fs.writeFileSync(path.join(workDir,'compile-' + jsxFileName), script);
-		exec('"ExtendScript Toolkit" -run ' + path.join(workDir,'compile-' + jsxFileName), function(err) {
+		var cp = exec('"ExtendScript Toolkit" -cmd ' + path.join(workDir,'compile-' + jsxFileName), function(err) {
 			console.log(err);
 		});
-		// process.exit();
+
+		cp.on('close', function() {
+			fs.unlinkSync(path.join(workDir,'compile-' + jsxFileName));
+			process.exit();
+		}); 
+	} else {
+		fs.writeFileSync(path.join(workDir,'build-' + jsxFileName), nStr);
+		process.exit();
 	}
 
 } else {
 	console.log('Bad arguments list!');
+	process.exit();
 }

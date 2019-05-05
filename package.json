@@ -15,6 +15,7 @@
   "author": "Rodion Rusu",
   "license": "ISC",
   "dependencies": {
-    "chokidar": "^2.1.5"
+    "chokidar": "^2.1.5",
+    "uglify-js": "^3.5.10"
   }
 }
